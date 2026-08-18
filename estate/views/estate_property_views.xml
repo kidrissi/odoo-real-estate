@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!-- 1. List/Tree View Definition -->
+    <record id="estate_property_view_list" model="ir.ui.view">
+      <field name="name">estate.property.list</field>
+      <field name="model">estate.property</field>
+      <field name="arch" type="xml">
+        <list string="Properties">
+          <field name="name"/>
+          <field name="postcode"/>
+          <field name="bedrooms"/>
+          <field name="living_area"/>
+          <field name="expected_price"/>
+          <field name="selling_price"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- 2. Form View Definition -->
+    <record id="estate_property_view_form" model="ir.ui.view">
+      <field name="name">estate.property.form</field>
+      <field name="model">estate.property</field>
+      <field name="arch" type="xml">
+        <form string="Property">
+          <sheet>
+            <div class="oe_title">
+              <h1><field name="name" placeholder="Property Title (e.g. Cozy Condo)"/></h1>
+            </div>
+            <group>
+              <group>
+                <field name="postcode"/>
+                <field name="date_availability"/>
+              </group>
+              <group>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Description &amp; Interior">
+                <group>
+                  <field name="description"/>
+                  <field name="bedrooms"/>
+                  <field name="living_area"/>
+                  <field name="facades"/>
+                </group>
+              </page>
+              <page string="Exterior / Garden">
+                <group>
+                  <field name="garage"/>
+                  <field name="garden"/>
+                  <field name="garden_area" invisible="not garden"/>
+                  <field name="garden_orientation" invisible="not garden"/>
+                </group>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- 3. Action Configuration to Open Views -->
+    <record id="estate_property_action" model="ir.actions.act_window">
+      <field name="name">Properties</field>
+      <field name="res_model">estate.property</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- 4. Menu Item Hierarchies -->
+    <menuitem name="Real Estate" id="estate_menu_root" sequence="10"/>
+    <menuitem name="Advertisements" id="estate_menu_first_level" parent="estate_menu_root"/>
+    <menuitem name="Properties" id="estate_menu_action" parent="estate_menu_first_level" action="estate_property_action"/>
+
+  </data>
+</odoo>
